@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Will You Be My Valentine? 💖</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 25px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 350px;
+      position: relative;
+      z-index: 10;
+    }
+
+    h1 { color: #ff4d6d; margin: 10px 0; font-size: 1.8rem; }
+    
+    .buttons {
+      margin-top: 30px;
+      height: 60px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      position: absolute;
+    }
+
+    /* YES BUTTON ANIMATION */
+    #yesBtn { 
+      background: #ff4d6d; 
+      color: white; 
+      left: 30px; 
+      animation: heartbeat 1.2s infinite; 
+    }
+
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      15% { transform: scale(1.15); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    #noBtn { background: #adb5bd; color: white; right: 30px; transition: 0.1s; }
+
+    /* TEDDY KISSING LOGIC */
+    #animation-container {
+      height: 120px;
+      display: none; 
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .teddy { font-size: 70px; position: absolute; transition: 0.3s; }
+    
+    .bear-left { 
+        left: 50px; 
+        animation: kissLeft 1.5s infinite ease-in-out; 
+    }
+    .bear-right { 
+        right: 50px; 
+        transform: scaleX(-1); /* Flips the second bear to face the first */
+        animation: kissRight 1.5s infinite ease-in-out; 
+    }
+
+    @keyframes kissLeft {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      50% { transform: translateX(55px) rotate(20deg); } /* Lean and move forward */
+    }
+
+    @keyframes kissRight {
+      0%, 100% { transform: scaleX(-1) translateX(0) rotate(0deg); }
+      50% { transform: scaleX(-1) translateX(55px) rotate(20deg); } /* Lean and move forward */
+    }
+
+    .kiss-heart {
+      position: absolute;
+      font-size: 35px;
+      opacity: 0;
+      animation: heartPop 1.5s infinite;
+    }
+
+    @keyframes heartPop {
+      0%, 45% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1.2) translateY(-20px); }
+      100% { opacity: 0; transform: scale(1.5) translateY(-40px); }
+    }
+
+    .heart-float {
+      position: fixed;
+      font-size: 20px;
+      animation: floatUp 4s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div id="animation-container">
+      <div class="teddy bear-left">🧸</div>
+      <div class="kiss-heart">❤️</div>
+      <div class="teddy bear-right">🧸</div>
+    </div>
+
+    <h1 id="mainText">Kanak, will you be my Valentine? 💖</h1>
+    
+    <div class="buttons" id="btnContainer">
+      <button id="yesBtn">Yes! 💘</button>
+      <button id="noBtn">No 😅</button>
+    </div>
+    
+    <p style="margin-top:20px; color:#666; font-size: 0.8rem;">— from Deep</p>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const container = document.getElementById('animation-container');
+    const mainText = document.getElementById('mainText');
+    const btnContainer = document.getElementById('btnContainer');
+
+    // No button runs away
+    noBtn.addEventListener('mouseover', () => {
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+      noBtn.style.position = 'fixed';
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    });
+
+    // Yes button action
+    yesBtn.addEventListener('click', () => {
+      mainText.innerHTML = "Yay!! I love you, Kanak! 🥰";
+      btnContainer.style.display = 'none'; 
+      container.style.display = 'flex';   
+      setInterval(createHeart, 300);
+    });
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.innerHTML = "❤️";
+      heart.className = "heart-float";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.top = "105vh";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }
+  </script>
+</body>
+</html>
